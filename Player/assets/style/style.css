@@ -1,0 +1,137 @@
+/* 
+Santiago Ramirez
+Blackjack II CSS Style Sheet
+ */
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+body {
+    font-size: 18px;
+    text-align: center;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    background-color: #141414;
+    color: rgb(0, 0, 0);
+}
+
+div {
+    font-size: 14px;
+}
+
+button {
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 20px;
+    background: #de2c2c;
+    padding: 10px 20px 10px 20px;
+    box-shadow: 0 4px 8px #de2c2c83;
+}
+
+button:disabled {
+    background: grey;
+    color: #cccccc;
+}
+
+
+.login {
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 14px;
+    background: #de2c2c;
+    margin: auto;
+    padding: 5px 10px 5px 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .5);
+}
+
+.rounded-box {
+    border-radius: 15px;
+    padding: 20px;
+    margin-right: 100px;
+    margin-left: 100px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .8);
+    background-color: white;
+    
+}
+
+.server-methods {
+    background-color: #de2c2c;
+    border-radius: 25px;
+    padding: 10px;
+    display: inline-block;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .8);
+    margin: auto;
+}
+
+.stats {
+    font-size: 18px;
+    border-radius: 15px;
+    padding: 20px;
+    display: inline-block;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+    background-color: black;
+    color: white;
+}
+
+.name {
+    font-size: 14px;
+    font-weight: bold;
+    margin: auto;
+}
+
+.github {
+    position: absolute;
+    top: 0;
+    border: 0;
+    right: 0;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-row: 1;
+    column-gap: 10px; 
+}
+
+#gameBoard {
+    grid-column: 1;
+    background-color: rgb(0, 94, 0);
+    border-color: brown;
+    border-radius: 25px;
+    margin-right: 50px;
+    margin-left: 50px;
+    width: calc(100% - 100px);
+    height: calc(100% - 40px); 
+    outline: 15px solid rgb(127, 84, 41);
+    box-shadow: 0 4px 8px rgba(127, 84, 41,0.8);
+}
+
+#controls {
+    grid-column: 2;
+    gap: 0px;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+}
+
+#messagediv {
+    width: auto;
+    height: auto;
+    margin: auto;
+    padding: 10px;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    outline: 2px solid black; 
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.5);
+}
+
+
+  
