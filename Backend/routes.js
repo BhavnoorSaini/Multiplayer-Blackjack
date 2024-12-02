@@ -18,23 +18,18 @@ router.post('/username', function (req, res) {
 // Player 1 route
 // accepts GET req with players name, stats, and status
 router.get('/player1', function (req, res) {
-    a++;
-    mydb.insertRec({username: 'Player1', 'score': a});
-    res.send("Hello Player1! Inserting score b: " + b);
+    console.log(req.body);
 });
 
 // Player 2 Route
 router.get('/player2', function (req, res) {
-    b++;
-    mydb.insertRec({username: 'Player2', 'score': b});
-    res.send("Hello Player2! Inserting score a: " + a);
+    console.log(req.body);
 });
 
 // Highscore Route
 // responds with JSON highscore list
 router.get('/highscore', function (req, res) {
-    mydb.findRec();
-    res.send("Finding 1 record");
+    console.log(req.body);
 });
 
 module.exports = router;
