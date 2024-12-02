@@ -8,11 +8,25 @@
 const http = require('http');
 const url = require('url');         // Require the URL module
 const fs = require('fs');           // Require the file system module
+var express = require('express');
+var routes = require('./routes.js');
+var dbjmr = require('./dbmgr.js');
+const cors = require('cors');
+
+
 const blackjackAdvice = require('./blackjackadvice'); 
 
-
+//const app = express();        need to switch server to use express
 const hostname = '127.0.0.1';
 const port = 3000;
+
+/*
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cors());
+app.use('/', routes);
+app.listen(port, () => console.log("Server running on port: "+port));
+*/
 
 const server = http.createServer((req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');      // set CORS header
