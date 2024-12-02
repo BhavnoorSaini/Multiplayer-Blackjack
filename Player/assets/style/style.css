@@ -67,7 +67,7 @@ button:disabled {
 }
 
 .stats {
-    font-size: 18px;
+    font-size: 12px;
     border-radius: 15px;
     padding: 20px;
     display: inline-block;
@@ -75,6 +75,17 @@ button:disabled {
     box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
     background-color: black;
     color: white;
+}
+
+.scores {
+    font-size: 12px;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 0;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+    background-color: black;
+    color: white;
+    line-height: .5; /* Added line spacing */
 }
 
 .name {
