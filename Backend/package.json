@@ -1,0 +1,13 @@
+{
+  "name": "Multiplayer Blackjack WebApp",
+  "version": "1.0.0",
+  "description": "Web application of blackjack",
+  "main": "app.js",
+  "author": "Santiago Ramirez & Bhavnoor Saini",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "mongodb": "^6.10.0"
+  }
+}
