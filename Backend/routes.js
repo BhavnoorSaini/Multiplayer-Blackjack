@@ -9,31 +9,41 @@ const url = require('url');             //use the url module
 //Setup database, only need to run this once. Unblock to run once then block this line again
 //mydb.setup();     
 
-// username route
-// accepts POST requests with uesrnames and stores in database
-router.post('/username', function (req, res) {
-    
+
+// Callback function to check if username already exists in the database else insert it
+function checkUsername(req, res) {
     var username = req.body.username;
-    console.log("username recieved");
     if (!username) {
         return res.status(400).json({ message: 'Username is required.' });
     }
-    
-    mydb.findUser(username,function(exists){ 
-        console.log("finding user");
-        if (exists) {
-            console.log("user exists");
-            res.status(409).json({message: "Username already exists."});
-            return;
+
+    // Check if username already exists in the database else insert it
+    mydb.findRec({ username: username }, function (err, result) {
+        if (err) {
+            console.error('Error finding username:', err);
+            return res.status(500).json({ message: 'Internal server error.' });
         }
-        mydb.addUser(username,function(){
-            console.log("username added");
-            res.status(201).json({message: "Username registered."})
-        })
-    }) 
-        
-        
-});
+
+        if (result) {
+            // Username already exists
+            return res.status(409).json({ message: 'Username already exists.' });
+        } else {
+            // Insert the new username into the database
+            mydb.insertRec({ username: username }, function (err) {
+                if (err) {
+                    console.error('Error inserting username:', err);
+                    return res.status(500).json({ message: 'Internal server error.' });
+                }
+
+                return res.status(201).json({ message: 'Username stored successfully.' });
+            });
+        }
+    });
+}    
+
+
+// username route accepts POST requests with usernames and stores in database, ensures username is unique
+router.post('/username', checkUsername);
 
 // Player 1 route
 // accepts GET req with players name, stats, and status
@@ -95,5 +105,18 @@ router.get('/player2', function (req, res) {
 router.get('/highscore', function (req, res) {
     console.log(req.body);
 });
+
+
+// Route to print all usernames
+router.get('/printUsernames', function (req, res) {
+    mydb.printAllUsernames(function (err, results) {
+      if (err) {
+        console.error('Error printing usernames:', err);
+        return res.status(500).json({ message: 'Internal server error.' });
+      }
+      return res.status(200).json({ message: 'Usernames printed successfully.' });
+    });
+  });
+  
 
 module.exports = router;

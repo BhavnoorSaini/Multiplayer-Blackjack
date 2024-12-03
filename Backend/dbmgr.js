@@ -48,36 +48,104 @@ let createMyCollection = function (callbackFn) {
 };
 
 //inserts a record of myobj into the database
-exports.insertRec = function (myobj) {
-    myMongoClient.connect(url)
-    .then(db => {
-      var dbo = db.db(myDB);
-      dbo.collection(mycollection).insertOne(myobj)
-      .then(()=>{
-        console.log("1 document inserted");
-        db.close();
-      })
+// exports.insertRec = function (myobj) {
+//     myMongoClient.connect(url)
+//     .then(db => {
+//       var dbo = db.db(myDB);
+//       dbo.collection(mycollection).insertOne(myobj)
+//       .then(()=>{
+//         console.log("1 document inserted");
+//         db.close();
+//       })
+//     })
+//     .catch(function (err) {
+//         throw err;
+//     })
+// };
+
+//inserts a record of myobj into the database
+exports.insertRec = function (myobj, callbackFn) {
+  myMongoClient.connect(url)
+  .then(db => {
+    var dbo = db.db(myDB);
+    dbo.collection(mycollection).insertOne(myobj)
+    .then(()=>{
+      console.log("1 document inserted");
+      db.close();
+      if (callbackFn) callbackFn(null);
     })
-    .catch(function (err) {
-        throw err;
-    })
+    .catch(err => {
+      db.close();
+      if (callbackFn) callbackFn(err);
+    });
+  })
+  .catch(function (err) {
+      if (callbackFn) callbackFn(err);
+  })
 };
+
+
+//finds a single record with information contained in data
+// exports.findRec = function (data, callbackFn) {
+//     myMongoClient.connect(url)
+//     .then(db => { 
+//       var dbo = db.db(myDB);
+//       dbo.collection(mycollection).findOne(data)
+//       .then(results=>{
+//         console.log("Results");
+//         console.log(results);
+//         db.close();
+//       })
+//     })
+//     .catch(function (err) {
+//         throw err;
+//     })
+// };
 
 //finds a single record with information contained in data
 exports.findRec = function (data, callbackFn) {
-    myMongoClient.connect(url)
-    .then(db => { 
-      var dbo = db.db(myDB);
-      dbo.collection(mycollection).findOne(data)
-      .then(results=>{
-        console.log("Results");
-        console.log(results);
-        db.close();
-      })
+  myMongoClient.connect(url)
+  .then(db => { 
+    var dbo = db.db(myDB);
+    dbo.collection(mycollection).findOne(data)
+    .then(results=>{
+      console.log("Results");
+      console.log(results);
+      db.close();
+      if (callbackFn) callbackFn(null, results);
     })
-    .catch(function (err) {
-        throw err;
+    .catch(err => {
+      db.close();
+      if (callbackFn) callbackFn(err);
+    });
+  })
+  .catch(function (err) {
+      if (callbackFn) callbackFn(err);
+  })
+};
+
+// finds all records and prints usernames
+exports.printAllUsernames = function (callbackFn) {
+  myMongoClient.connect(url)
+  .then(db => {
+    var dbo = db.db(myDB);
+    dbo.collection(mycollection).find({}).toArray()
+    .then(results => {
+      console.log("Usernames:");
+      results.forEach(record => {
+        console.log(record.username);
+      });
+      db.close();
+      if (callbackFn) callbackFn(null, results);
     })
+    .catch(err => {
+      db.close();
+      if (callbackFn) callbackFn(err);
+    });
+  })
+  .catch(function (err) {
+    if (callbackFn) callbackFn(err);
+  });
 };
 
 //finds all records using a limit (if limit is 0 all records are returned)
@@ -130,28 +198,3 @@ exports.updateData = function (queryData, newdata, callbackFn) {
     })
 };
 
-//finds a user by username
-exports.findUser = function (username, callbackFn) {
-  myMongoClient.connect(url, function(err, db) {
-      if (err) throw err;
-      var dbo = db.db(myDB);
-      dbo.collection(mycollection).findOne({ username: username }, function(err, result) {
-          if (err) throw err;
-          callbackFn(result);
-          db.close();
-      });
-  });
-};
-
-//adds a new user
-exports.addUser = function (username, callbackFn) {
-  myMongoClient.connect(url, function(err, db) {
-      if (err) throw err;
-      var dbo = db.db(myDB);
-      dbo.collection(mycollection).insertOne({ username: username }, function(err, res) {
-          if (err) throw err;
-          callbackFn(res);
-          db.close();
-      });
-  });
-};
