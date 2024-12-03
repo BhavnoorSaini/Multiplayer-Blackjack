@@ -118,7 +118,7 @@ router.get('/printUsernames', function (req, res) {
       }
       return res.status(200).json({ message: 'Usernames printed successfully.' });
     });
-  });
+});
   
 
 module.exports = router;

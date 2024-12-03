@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function fetchHighscores() {
-    fetch('http://127.0.0.1:3000/highscores')
+    fetch('http://127.0.0.1:3000/highscore')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Network response was not ok (${response.status})`);
