@@ -84,24 +84,6 @@ exports.insertRec = function (myobj, callbackFn) {
   })
 };
 
-
-//finds a single record with information contained in data
-// exports.findRec = function (data, callbackFn) {
-//     myMongoClient.connect(url)
-//     .then(db => { 
-//       var dbo = db.db(myDB);
-//       dbo.collection(mycollection).findOne(data)
-//       .then(results=>{
-//         console.log("Results");
-//         console.log(results);
-//         db.close();
-//       })
-//     })
-//     .catch(function (err) {
-//         throw err;
-//     })
-// };
-
 //finds a single record with information contained in data
 exports.findRec = function (data, callbackFn) {
   myMongoClient.connect(url)
@@ -183,6 +165,7 @@ exports.deleteRec = function (query, callbackFn) {
       });
   });
 };
+
 //deletes a collection
 exports.deleteCollection = function (callbackFn) {
     myMongoClient.connect(url)
@@ -259,13 +242,14 @@ exports.updateUserScore = function (username, newScore, callbackFn) {
   });
 };
 
-// Retrieves high scores sorted by score in descending order
+// Retrieves top 5 high scores sorted by score in descending order
 exports.getHighscores = function (callbackFn) {
   myMongoClient.connect(url)
       .then(db => {
           var dbo = db.db(myDB);
           dbo.collection(mycollection).find({}, { projection: { _id: 0, username: 1, score: 1 } })
               .sort({ score: -1 })
+              .limit(5)
               .toArray()
               .then(results => {
                   db.close();

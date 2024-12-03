@@ -13,27 +13,21 @@ const url = require('url');             //use the url module
 router.post('/username', function (req, res) {
     var username = req.body.username;
     if (!username) {
-        return res.status(400).json({ message: 'Username is required.' });
+        return res.status(400).json({ message: 'Username is required.' });          // error if the username is missing
     }
-
-    // Check if username already exists in the database else insert it
-    mydb.findRec({ username: username}, function (err, result) {
+    mydb.findRec({ username: username}, function (err, result) {                    // check if username already exists in the database else insert it
         if (err) {
             console.error('Error finding username:', err);
             return res.status(500).json({ message: 'Internal server error.' });
         }
-
-        if (result) {
-            // Username already exists
+        if (result) {                                                               // username already exists
             return res.status(409).json({ message: 'Username already exists.' });
         } else {
-            // Insert the new username into the database
-            mydb.insertRec({ username: username, score:0 }, function (err) {
+            mydb.insertRec({ username: username, score:0 }, function (err) {        // inserts the new username into the database
                 if (err) {
                     console.error('Error inserting username:', err);
                     return res.status(500).json({ message: 'Internal server error.' });
                 }
-
                 return res.status(201).json({ message: 'Username stored successfully.' });
             });
         }
@@ -41,26 +35,24 @@ router.post('/username', function (req, res) {
 });
 
 // Player 1 route
-// accepts GET req with players name, stats, and status
+// accepts GET req with players name, round status, and wallet amount
 router.get('/player1', function (req, res) {
     var username = req.query.username;
     var roundStatus =req.query.status;
     var walletAmount = parseInt(req.query.wallet, 10);
     console.log(JSON.stringify(req.query));
-    if (!username || !roundStatus || isNaN(walletAmount)) {    // checks if parameters are valid
+    if (!username || !roundStatus || isNaN(walletAmount)) {             // checks if parameters are valid
         return res.status(400).json({ message: 'Invalid parameters.' });
     }
-    
-    if (roundStatus === 'gameover') {
+    if (roundStatus === 'gameover') {                                   // if round status is gameover, then compare and update the highscores
         mydb.updateUserScore(username, walletAmount, function (err) {
-            if (err) {
+            if (err) {                                                  // error handling for existing names or other error
                 if (err.message === 'Username already exists.') {
                     return res.status(409).json({ message: 'Username already exists.' });
                 }
                 console.error('Error updating user score:', err);
                 return res.status(500).json({ message: 'Internal server error.' });
             }
-
             res.status(200).json({ message: 'Player1 processed successfully.' });
         });
     }     
