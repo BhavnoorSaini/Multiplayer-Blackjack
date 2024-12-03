@@ -1,5 +1,6 @@
 // Santiago Ramirez & Bhavnoor Saini
 // CSCE 315 - Blackjack Multiplayer Routes
+// --- Sets up routes on the express server ---
 
 var express = require('express');       // utilize routes
 var router = express.Router();
