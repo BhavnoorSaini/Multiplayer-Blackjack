@@ -7,11 +7,10 @@ var mydb = require('./dbmgr.js');       // use database manager module
 const url = require('url');             //use the url module
 
 //Setup database, only need to run this once. Unblock to run once then block this line again
-//mydb.setup();     
+//mydb.setup();      
 
-
-// Callback function to check if username already exists in the database else insert it
-function checkUsername(req, res) {
+// username route accepts POST requests with usernames and stores in database, ensures username is unique
+router.post('/username', function (req, res) {
     var username = req.body.username;
     if (!username) {
         return res.status(400).json({ message: 'Username is required.' });
@@ -39,11 +38,7 @@ function checkUsername(req, res) {
             });
         }
     });
-}    
-
-
-// username route accepts POST requests with usernames and stores in database, ensures username is unique
-router.post('/username', checkUsername);
+});
 
 // Player 1 route
 // accepts GET req with players name, stats, and status
