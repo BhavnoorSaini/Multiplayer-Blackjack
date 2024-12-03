@@ -14,35 +14,33 @@ const url = require('url');             //use the url module
 router.post('/username', function (req, res) {
     
     var username = req.body.username;
-    console.log(username)
+    console.log("username recieved");
     if (!username) {
         return res.status(400).json({ message: 'Username is required.' });
     }
-    /*
-    mydb.findUser(username)
-        .then(function(userExists) {
-            if (userExists) {
-                return res.status(409).json({ message: 'Username already exists.' });
-            }
-            return mydb.addUser(username);
+    
+    mydb.findUser(username,function(exists){ 
+        console.log("finding user");
+        if (exists) {
+            console.log("user exists");
+            res.status(409).json({message: "Username already exists."});
+            return;
+        }
+        mydb.addUser(username,function(){
+            console.log("username added");
+            res.status(201).json({message: "Username registered."})
         })
-        .then(function() {
-            res.status(201).json({ message: 'Username successfully registered.' });
-        })
-        .catch(function(error) {
-            console.error('Error handling /username route:', error);
-            res.status(500).json({ message: 'Internal server error.' });
-        });
-        */
+    }) 
+        
+        
 });
 
 // Player 1 route
 // accepts GET req with players name, stats, and status
 router.get('/player1', function (req, res) {
     var username = req.query.username;
-    var roundStatus = req.query.roundStatus;
+    var roundStatus =req.query.roundStatus;
     var walletAmount = parseInt(req.query.walletAmount, 10);
-    var rounds = parseInt(req.query.rounds, 10);
 
     if (!username || !roundStatus || isNaN(walletAmount) || isNaN(rounds)) {    // checks if parameters are valid
         return res.status(400).json({ message: 'Invalid parameters.' });
