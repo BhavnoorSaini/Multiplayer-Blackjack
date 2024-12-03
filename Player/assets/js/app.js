@@ -10,7 +10,13 @@ var gamePlay = {
   
     getUsername: function() {                   // gets the username from the GET request in the URL            
         const urlParams = new URLSearchParams(window.location.search);
-        const username = urlParams.get('username');
+        return urlParams.get('username');
+    },
+   
+    playGame: function() {                      // starts the game
+        this.Blackjack.initialize();
+        var username = this.getUsername();
+        setUsername(username);
         fetch('http://127.0.0.1:3000/username', {
             method: 'POST',
             headers: {
@@ -18,12 +24,6 @@ var gamePlay = {
             },
             body: JSON.stringify({ username: username })
         });
-        return urlParams.get('username');
-    },
-   
-    playGame: function() {                      // starts the game
-        this.Blackjack.initialize();
-        setUsername(this.getUsername());
         addMessage("Welcome to Blackjack, " + this.getUsername() + "!");        // displays welcome message with the username
         addMessage("Get and play advice given by the server using the Remote Move")
     },
@@ -46,7 +46,12 @@ var gamePlay = {
 
     reportOutcome: function(outcome) {          // reports the outcome to the server
         const serverURL = `http://127.0.0.1:3000/?outcome=`+outcome;
-        blackjack.getXHR(serverURL);                 // sends outcome as a GET request using XHR
+        fetch(`http://127.0.0.1:3000/player1?username=${this.getUsername()}&status=${outcome}&wallet=${user.userWallet}`, {
+            method: 'GET',
+            headers: {
+            'Access-Control-Allow-Origin': '*'
+            }
+        });
     }
 };
 

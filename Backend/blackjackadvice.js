@@ -59,9 +59,9 @@ exports.generateAdvice = function(userScore, dealerScore, callback) {
 
 exports.reportOutcome = function(outcome, callback) {
     setImmediate(() => {
-        const validOutcomes = ['won', 'lost', 'push'];
+        const validOutcomes = ['win', 'loss', 'push'];
         if (!validOutcomes.includes(outcome.toLowerCase())) {       // check if outcome is valid
-            callback({status: 'Error', message: 'Invalid outcome parameter. Must be "won", "lost", or "push".'});
+            callback({status: 'Error', message: 'Invalid outcome parameter. Must be "win", "loss", or "push".'});
             return;
         }
 
@@ -77,9 +77,9 @@ exports.reportOutcome = function(outcome, callback) {
                 pushes: 0
             };
             outcomes = JSON.parse(data);        // parse the outcomes from the file
-            if (outcome.toLowerCase() === 'won') {      // increment the count based on the outcome
+            if (outcome.toLowerCase() === 'win') {      // increment the count based on the outcome
                 outcomes.wins += 1;
-            } else if (outcome.toLowerCase() === 'lost') {
+            } else if (outcome.toLowerCase() === 'loss') {
                 outcomes.losses += 1;
             } else if (outcome.toLowerCase() === 'push') {
                 outcomes.pushes += 1;

@@ -4,6 +4,7 @@
 //provides the listners and event handling
 //------------------------------------------
 
+
 document.addEventListener("DOMContentLoaded", function() {      // waits for DOM to be loaded
     if (window.location.pathname.endsWith('index.html')) {  
         document.getElementById("loginform").addEventListener("submit", function() {        // listens for the submit button on the login form
@@ -29,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {      // waits for DOM
         });
 
         document.getElementById("reset").addEventListener("click", function() {
+            gamePlay.reportOutcome('gameover');
             gamePlay.reset();           // resets the game completely
         });
 

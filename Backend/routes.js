@@ -41,11 +41,11 @@ router.get('/player1', function (req, res) {
     var username = req.query.username;
     var roundStatus =req.query.roundStatus;
     var walletAmount = parseInt(req.query.walletAmount, 10);
-
+    console.log(JSON.stringify(req.query));
     if (!username || !roundStatus || isNaN(walletAmount) || isNaN(rounds)) {    // checks if parameters are valid
         return res.status(400).json({ message: 'Invalid parameters.' });
     }
-
+    /*
     if (roundStatus === 'gameover') {
         mydb.findUser(username)
             // check if user is found in db, 
@@ -60,6 +60,7 @@ router.get('/player1', function (req, res) {
             res.status(500).json({ message: 'Internal server error.' });
         });
     }
+        */
 });
 
 // Player 2 Route

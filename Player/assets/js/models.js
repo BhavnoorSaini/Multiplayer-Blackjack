@@ -203,7 +203,8 @@ var blackjack = {
             addMessage("Game Started!");
             enablePlayButtons(true);                                    // enables hit and stand buttons for the next turn, disabled deal and bets
         } else if (blackjack.player.userWallet.getValue() == 0){        // checks if player is out of money 
-            addMessage("You are out of money.");                    
+            addMessage("You are out of money."); 
+            gamePlay.reportOutcome('gameover');                   
         } else {
             addMessage("Please place a valid bet.")
         }
@@ -336,10 +337,10 @@ var blackjack = {
             gamePlay.reportOutcome("push");
             betIfWon = this.player.getUserBet();        // doesnt use the multiplier, refunds the bet if tied
         } else if (won == true){
-            gamePlay.reportOutcome("won");
+            gamePlay.reportOutcome("win");
             this.player.userWallet.setValue(betValue + (betIfWon));     // pays the bet if won
         } else if (won == false && tied == false) {
-            gamePlay.reportOutcome("lost");
+            gamePlay.reportOutcome("loss");
         }
         this.player.resetUserBet();         // sets bet back to 0
         updateWallet();
