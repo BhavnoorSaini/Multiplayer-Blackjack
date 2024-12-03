@@ -46,7 +46,7 @@ var gamePlay = {
 
     reportOutcome: function(outcome) {          // reports the outcome to the server
         const serverURL = `http://127.0.0.1:3000/?outcome=`+outcome;
-        fetch(`http://127.0.0.1:3000/player1?username=${this.getUsername()}&status=${outcome}&wallet=${user.userWallet}`, {
+        fetch(`http://127.0.0.1:3000/player1?username=${this.getUsername()}&status=${outcome}&wallet=${user.userWallet.getValue()}`, {
             method: 'GET',
             headers: {
             'Access-Control-Allow-Origin': '*'
