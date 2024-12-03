@@ -65,7 +65,7 @@ router.get('/player2', function (req, res) {
     var roundStatus =req.query.status;
     var walletAmount = parseInt(req.query.wallet, 10);
     console.log(JSON.stringify(req.query));
-    if (!username || !roundStatus || isNaN(walletAmount)) {    // checks if parameters are valid
+    if (!username || !roundStatus || isNaN(walletAmount)) {    
         return res.status(400).json({ message: 'Invalid parameters.' });
     }
     
@@ -79,7 +79,7 @@ router.get('/player2', function (req, res) {
                 return res.status(500).json({ message: 'Internal server error.' });
             }
 
-            res.status(200).json({ message: 'Player1 processed successfully.' });
+            res.status(200).json({ message: 'Player2 processed successfully.' });
         });
     }     
 });
@@ -87,24 +87,24 @@ router.get('/player2', function (req, res) {
 // Highscore Route
 // responds with JSON highscore list
 router.get('/highscore', function (req, res) {
-    mydb.getHighscores(function (err, highscores) {
+    mydb.getHighscores(function (err, highscores) {             // calls the getHighscores database function that returns an array of 5 top scores
         if (err) {
             console.error('Error handling /highscores route:', err);
             return res.status(500).json({ message: 'Internal server error.' });
         }
 
-        res.status(200).json({ highscores: highscores });
+        res.status(200).json({ highscores: highscores });       // set 200 status and respond with the json highscores list
     });
 });
 
 // Route to print all usernames
 router.get('/printUsernames', function (req, res) {
-    mydb.printAllUsernames(function (err, results) {
+    mydb.printAllUsernames(function (err, results) {            // calls the printAllUsernames function and finds all data in the db
       if (err) {
         console.error('Error printing usernames:', err);
         return res.status(500).json({ message: 'Internal server error.' });
       }
-      return res.status(200).json({ message: 'Usernames printed successfully.' });
+      return res.status(200).json({ message: 'Usernames printed successfully.' });      // resonds with a successful message
     });
 });
   
