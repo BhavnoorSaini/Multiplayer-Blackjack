@@ -12,7 +12,26 @@ const url = require('url');             //use the url module
 // username route
 // accepts POST requests with uesrnames and stores in database
 router.post('/username', function (req, res) {
-    console.log(req.body);
+    var username = req.body.username;
+
+    if (!username) {
+        return res.status(400).json({ message: 'Username is required.' });
+    }
+
+    mydb.findUser(username)
+        .then(function(userExists) {
+            if (userExists) {
+                return res.status(409).json({ message: 'Username already exists.' });
+            }
+            return mydb.addUser(username);
+        })
+        .then(function() {
+            res.status(201).json({ message: 'Username successfully registered.' });
+        })
+        .catch(function(error) {
+            console.error('Error handling /username route:', error);
+            res.status(500).json({ message: 'Internal server error.' });
+        });
 });
 
 // Player 1 route

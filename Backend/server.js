@@ -13,6 +13,7 @@ const cors = require('cors');
 const app = express();
 const hostname = '127.0.0.1';
 const port = 3000;
+const blackjackAdvice = require('./blackjackadvice');
 
 //Get access to request body for POST requests
 app.use(express.urlencoded({ extended: true }));
@@ -27,7 +28,7 @@ app.use('/', routes);
 //Listen for connections on port 3000
 app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`)
-    // blackjackAdvice.resetOutcomes();        // reset outcomes file on server start
+    blackjackAdvice.resetOutcomes();        // reset outcomes file on server start
 });
 
 
