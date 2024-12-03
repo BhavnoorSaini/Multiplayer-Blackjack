@@ -37,12 +37,56 @@ router.post('/username', function (req, res) {
 // Player 1 route
 // accepts GET req with players name, stats, and status
 router.get('/player1', function (req, res) {
-    console.log(req.body);
+    var username = req.query.username;
+    var roundStatus = req.query.roundStatus;
+    var walletAmount = parseInt(req.query.walletAmount, 10);
+    var rounds = parseInt(req.query.rounds, 10);
+
+    if (!username || !roundStatus || isNaN(walletAmount) || isNaN(rounds)) {    // checks if parameters are valid
+        return res.status(400).json({ message: 'Invalid parameters.' });
+    }
+
+    if (roundStatus === 'gameover') {
+        mydb.findUser(username)
+            // check if user is found in db, 
+                // if not found, add user to database
+            //then check if they had a better score (higher rounds)
+                // if score is higher, update user's highscore
+        .then(function() {
+            res.status(200).json({ message: 'Player1 processed successfully.' });
+        })
+        .catch(function(error) {
+            console.error('Error handling /player1 route:', error);
+            res.status(500).json({ message: 'Internal server error.' });
+        });
+    }
 });
 
 // Player 2 Route
 router.get('/player2', function (req, res) {
-    console.log(req.body);
+    var username = req.query.username;
+    var roundStatus = req.query.roundStatus;
+    var walletAmount = parseInt(req.query.walletAmount, 10);
+    var rounds = parseInt(req.query.rounds, 10);
+
+    if (!username || !roundStatus || isNaN(walletAmount) || isNaN(rounds)) {    // checks if parameters are valid
+        return res.status(400).json({ message: 'Invalid parameters.' });
+    }
+
+    if (roundStatus === 'gameover') {
+        mydb.findUser(username)
+            // check if user is found in db, 
+                // if not found, add user to database
+            //then check if they had a better score (higher rounds)
+                // if score is higher, update user's highscore
+        .then(function() {
+            res.status(200).json({ message: 'Player1 processed successfully.' });
+        })
+        .catch(function(error) {
+            console.error('Error handling /player1 route:', error);
+            res.status(500).json({ message: 'Internal server error.' });
+        });
+    }
 });
 
 // Highscore Route
