@@ -130,3 +130,28 @@ exports.updateData = function (queryData, newdata, callbackFn) {
     })
 };
 
+//finds a user by username
+exports.findUser = function (username, callbackFn) {
+  myMongoClient.connect(url, function(err, db) {
+      if (err) throw err;
+      var dbo = db.db(myDB);
+      dbo.collection(mycollection).findOne({ username: username }, function(err, result) {
+          if (err) throw err;
+          callbackFn(result);
+          db.close();
+      });
+  });
+};
+
+//adds a new user
+exports.addUser = function (username, callbackFn) {
+  myMongoClient.connect(url, function(err, db) {
+      if (err) throw err;
+      var dbo = db.db(myDB);
+      dbo.collection(mycollection).insertOne({ username: username }, function(err, res) {
+          if (err) throw err;
+          callbackFn(res);
+          db.close();
+      });
+  });
+};
