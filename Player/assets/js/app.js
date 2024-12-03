@@ -39,7 +39,6 @@ var gamePlay = {
         blackjack.player.resetUserBet();
         updateWallet();
         updateCardsLeft();
-        updatePlayerValue();
         updateDealerValue();
         addMessage("Game Reset!");              // displays message when successfully reset
     },

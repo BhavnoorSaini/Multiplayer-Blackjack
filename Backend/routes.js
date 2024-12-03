@@ -18,7 +18,7 @@ function checkUsername(req, res) {
     }
 
     // Check if username already exists in the database else insert it
-    mydb.findRec({ username: username }, function (err, result) {
+    mydb.findRec({ username: username}, function (err, result) {
         if (err) {
             console.error('Error finding username:', err);
             return res.status(500).json({ message: 'Internal server error.' });
@@ -29,7 +29,7 @@ function checkUsername(req, res) {
             return res.status(409).json({ message: 'Username already exists.' });
         } else {
             // Insert the new username into the database
-            mydb.insertRec({ username: username }, function (err) {
+            mydb.insertRec({ username: username, score:0 }, function (err) {
                 if (err) {
                     console.error('Error inserting username:', err);
                     return res.status(500).json({ message: 'Internal server error.' });
@@ -49,63 +49,65 @@ router.post('/username', checkUsername);
 // accepts GET req with players name, stats, and status
 router.get('/player1', function (req, res) {
     var username = req.query.username;
-    var roundStatus =req.query.roundStatus;
-    var walletAmount = parseInt(req.query.walletAmount, 10);
+    var roundStatus =req.query.status;
+    var walletAmount = parseInt(req.query.wallet, 10);
     console.log(JSON.stringify(req.query));
-    if (!username || !roundStatus || isNaN(walletAmount) || isNaN(rounds)) {    // checks if parameters are valid
+    if (!username || !roundStatus || isNaN(walletAmount)) {    // checks if parameters are valid
         return res.status(400).json({ message: 'Invalid parameters.' });
     }
-    /*
+    
     if (roundStatus === 'gameover') {
-        mydb.findUser(username)
-            // check if user is found in db, 
-                // if not found, add user to database
-            //then check if they had a better score (higher rounds)
-                // if score is higher, update user's highscore
-        .then(function() {
+        mydb.updateUserScore(username, walletAmount, function (err) {
+            if (err) {
+                if (err.message === 'Username already exists.') {
+                    return res.status(409).json({ message: 'Username already exists.' });
+                }
+                console.error('Error updating user score:', err);
+                return res.status(500).json({ message: 'Internal server error.' });
+            }
+
             res.status(200).json({ message: 'Player1 processed successfully.' });
-        })
-        .catch(function(error) {
-            console.error('Error handling /player1 route:', error);
-            res.status(500).json({ message: 'Internal server error.' });
         });
-    }
-        */
+    }     
 });
 
 // Player 2 Route
 router.get('/player2', function (req, res) {
     var username = req.query.username;
-    var roundStatus = req.query.roundStatus;
-    var walletAmount = parseInt(req.query.walletAmount, 10);
-    var rounds = parseInt(req.query.rounds, 10);
-
-    if (!username || !roundStatus || isNaN(walletAmount) || isNaN(rounds)) {    // checks if parameters are valid
+    var roundStatus =req.query.status;
+    var walletAmount = parseInt(req.query.wallet, 10);
+    console.log(JSON.stringify(req.query));
+    if (!username || !roundStatus || isNaN(walletAmount)) {    // checks if parameters are valid
         return res.status(400).json({ message: 'Invalid parameters.' });
     }
-
+    
     if (roundStatus === 'gameover') {
-        mydb.findUser(username)
-            // check if user is found in db, 
-                // if not found, add user to database
-            //then check if they had a better score (higher rounds)
-                // if score is higher, update user's highscore
-        .then(function() {
+        mydb.updateUserScore(username, walletAmount, function (err) {
+            if (err) {
+                if (err.message === 'Username already exists.') {
+                    return res.status(409).json({ message: 'Username already exists.' });
+                }
+                console.error('Error updating user score:', err);
+                return res.status(500).json({ message: 'Internal server error.' });
+            }
+
             res.status(200).json({ message: 'Player1 processed successfully.' });
-        })
-        .catch(function(error) {
-            console.error('Error handling /player1 route:', error);
-            res.status(500).json({ message: 'Internal server error.' });
         });
-    }
+    }     
 });
 
 // Highscore Route
 // responds with JSON highscore list
 router.get('/highscore', function (req, res) {
-    console.log(req.body);
-});
+    mydb.getHighscores(function (err, highscores) {
+        if (err) {
+            console.error('Error handling /highscores route:', err);
+            return res.status(500).json({ message: 'Internal server error.' });
+        }
 
+        res.status(200).json({ highscores: highscores });
+    });
+});
 
 // Route to print all usernames
 router.get('/printUsernames', function (req, res) {

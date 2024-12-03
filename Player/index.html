@@ -28,18 +28,21 @@ index.html
       <br><br>
       <div class="scores">
         <p><strong>Highscores:</strong></p>
-      <table style="margin: 0 auto;">
-        <tr><th>Username</th>
-            <th>Score</th></tr>
-        <tr><td>NoUser1</td>
-            <td>####</td></tr>
-        <tr><td>NoUser2</td>
-            <td>####</td></tr>
-        <tr><td>NoUser3</td>
-            <td>####</td></tr>
+        <table style="margin: 0 auto;">
+          <thead>
+              <tr>
+                <th>Username</th>
+                <th>Score</th>
+              </tr>
+          </thead>
+          <tbody id="highscores-body">
+              <!-- Dynamic Highscores will be inserted here -->
+          </tbody>
       </table>
     </div>
     </div>
   </body>
+  <script src="assets/js/view.js" type="text/javascript"></script>
+  <script src="assets/js/highscores.js" type="text/javascript"></script>
   <script src="assets/js/listeners.js" type="text/javascript"></script>     <!--Calls listners js file for the login event handler-->
 </html>

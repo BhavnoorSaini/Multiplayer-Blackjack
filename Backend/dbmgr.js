@@ -109,8 +109,7 @@ exports.findRec = function (data, callbackFn) {
     var dbo = db.db(myDB);
     dbo.collection(mycollection).findOne(data)
     .then(results=>{
-      console.log("Results");
-      console.log(results);
+      console.log("Results:", results);
       db.close();
       if (callbackFn) callbackFn(null, results);
     })
@@ -124,16 +123,17 @@ exports.findRec = function (data, callbackFn) {
   })
 };
 
-// finds all records and prints usernames
+
+// finds all records and prints usernames with scores
 exports.printAllUsernames = function (callbackFn) {
   myMongoClient.connect(url)
   .then(db => {
     var dbo = db.db(myDB);
     dbo.collection(mycollection).find({}).toArray()
     .then(results => {
-      console.log("Usernames:");
+      console.log("Usernames with Scores:");
       results.forEach(record => {
-        console.log(record.username);
+        console.log(`Username: ${record.username}, Score: ${record.score}`);
       });
       db.close();
       if (callbackFn) callbackFn(null, results);
@@ -164,7 +164,25 @@ exports.findAll = function (limit,callbackFn) {
         throw err;
     })
 };
-
+exports.deleteRec = function (query, callbackFn) {
+  myMongoClient.connect(url, function(err, client) {
+      if (err) {
+          console.error("Error connecting to database:", err);
+          return callbackFn(err);
+      }
+      var dbo = client.db(myDB);
+      dbo.collection(mycollection).deleteOne(query, function(err, result) {
+          if (err) {
+              console.error("Error deleting record:", err);
+              client.close();
+              return callbackFn(err);
+          }
+          console.log("1 document deleted");
+          client.close();
+          if (callbackFn) callbackFn(null, result);
+      });
+  });
+};
 //deletes a collection
 exports.deleteCollection = function (callbackFn) {
     myMongoClient.connect(url)
@@ -183,18 +201,85 @@ exports.deleteCollection = function (callbackFn) {
 };
 
 //updates queryData's data in the database to newdata
-exports.updateData = function (queryData, newdata, callbackFn) {
-    myMongoClient.connect(url)
-    .then(db => { 
+exports.updateData = function (data, updateFields, callbackFn) {
+  myMongoClient.connect(url)
+  .then(db => {
       var dbo = db.db(myDB);
-      dbo.collection(mycollection).updateOne(queryData, {$set: newdata})
-      .then(results=>{
-        console.log("1 document updated");
-        db.close();
+      dbo.collection(mycollection).updateOne(
+          data,
+          { $set: updateFields }
+      )
+      .then(result => {
+          console.log("1 document updated");
+          db.close();
+          if (callbackFn) callbackFn(null, result);
       })
-    })
-    .catch(function (err) {
-        throw err;
-    })
+      .catch(err => {
+          console.error("Error updating record:", err);
+          db.close();
+          if (callbackFn) callbackFn(err);
+      });
+  })
+  .catch(function (err) {
+      console.error("Error connecting to database:", err);
+      callbackFn(err, null);
+  });
 };
 
+// Updates user's score if the new score is higher than the existing score
+exports.updateUserScore = function (username, newScore, callbackFn) {
+  console.log(`Attempting to update score for username: ${username} with newScore: ${newScore}`);
+
+  exports.findRec({ username: username }, function (err, user) {
+      if (err) {
+          console.error('Error finding user:', err);
+          return callbackFn(err);
+      }
+      console.log('User found:', user);
+      if (user) {
+          console.log('Current Score:', user.score);
+          if (newScore > user.score) {
+              exports.updateData({ username: username }, { score: newScore }, function (err) {
+                  if (err) {
+                      console.error('Error updating user score:', err);
+                      return callbackFn(err);
+                  }
+                  console.log("User score updated.");
+                  callbackFn(null);
+              });
+          } else {
+              console.log("New score is not higher than existing score. No update performed.");
+              callbackFn(null);
+          }
+      } else {
+          console.log("User not found. Unable to update score.");
+          // Optionally, handle user not found: add user or return an error
+          return callbackFn(new Error('User not found.'));
+      }
+  });
+};
+
+// Retrieves high scores sorted by score in descending order
+exports.getHighscores = function (callbackFn) {
+  myMongoClient.connect(url)
+      .then(db => {
+          var dbo = db.db(myDB);
+          dbo.collection(mycollection).find({}, { projection: { _id: 0, username: 1, score: 1 } })
+              .sort({ score: -1 })
+              .toArray()
+              .then(results => {
+                  db.close();
+                  console.log("Highscores:", results);
+                  callbackFn(null, results);
+              })
+              .catch(err => {
+                  console.error("Error retrieving high scores:", err);
+                  db.close();
+                  callbackFn(err, null);
+              });
+      })
+      .catch(function (err) {
+          console.error("Error connecting to database:", err);
+          callbackFn(err, null);
+      });
+};
