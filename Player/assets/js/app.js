@@ -10,6 +10,14 @@ var gamePlay = {
   
     getUsername: function() {                   // gets the username from the GET request in the URL            
         const urlParams = new URLSearchParams(window.location.search);
+        const username = urlParams.get('username');
+        fetch('http://127.0.0.1:3000/username', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: username })
+        });
         return urlParams.get('username');
     },
    
