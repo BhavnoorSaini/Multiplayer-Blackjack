@@ -78,6 +78,10 @@ const card_deck = {       // defines the card deck
     }
 };
 
+exports.getDeck = function() {
+    return card_deck;
+};
+
 module.exports = {
     card_deck,
 };
