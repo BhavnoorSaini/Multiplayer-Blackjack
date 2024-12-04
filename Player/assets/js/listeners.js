@@ -20,10 +20,6 @@ document.addEventListener("DOMContentLoaded", function() {      // waits for DOM
             blackjack.stand();          // calls the stand function to switch to the dealers turn
         });
 
-        $("#xhrbutton").on("click", function() {            // calls the function that gets a request using XHR for advice using both the user and dealer scores
-            blackjack.getXHR('http://127.0.0.1:3000/?userscore='+blackjack.player.userhand.getScore()+'&dealerscore='+blackjack.dealer.getDealerShownScore());
-        });
-
         document.getElementById("deal").addEventListener("click", function() {
             blackjack.deal();           // starts a new game and deals the cards
             

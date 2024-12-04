@@ -258,16 +258,6 @@ var blackjack = {
         enablePlayButtons(false);           // reenables deal and bet buttons, match has ended
     },
 
-    getRemoteAdvice: function (response) {      // takes the response from the server in JSON as a parameter and checks if the advice is to hit or stay
-        if (response.content.Advice == 'Hit') {
-            addMessage("Server decided to HIT");
-            this.hit();                         // if advice from server says hit, call the hit function
-        } else if (response.content.Advice == 'Stay') {
-            addMessage("Server decided to STAND");
-            this.stand();                       // if advice from server says stay, call the stand function
-        }
-    },
-
     getRemoteOutcome: function (response) {
         let wins = response.content.wins;
         let losses = response.content.losses;
@@ -276,47 +266,6 @@ var blackjack = {
         addMessage("Wins: " + wins);
         addMessage("Losses: " + losses);
         addMessage("Pushes: " + pushes);
-    },
-
-    getXHR: function (serverURL) {              // sends a GET request using XMLHttpRequest
-        let xhr = new XMLHttpRequest();                     // create a new XMLHttpRequest object
-        xhr.overrideMimeType("application/json");           // use JSON
-        xhr.open('GET', serverURL);                         // initialize a GET request to the server URL
-        xhr.send(); 
-        xhr.onload = function () { 
-            var response = JSON.parse(xhr.responseText);    // parse the JSON data
-            if (xhr.status != 200) {                        // check for an error status
-                alert("404 error: Try sending another request");        // alert user if theres an error
-            } else if (response.content.Advice !== undefined) {     // checks if response is for the advice
-                blackjack.getRemoteAdvice(response);            // call the function to check and exceute the advice from the server
-            } else if (response.content.wins !== undefined && response.content.losses !== undefined && response.content.pushes !== undefined) {     // checks if the response is for the outcome
-                blackjack.getRemoteOutcome(response);
-            }
-        }
-    },
-
-    getjQueryGET: function (serverURL) {        // sends a GET request using jQuery
-        $.getJSON(serverURL, data => {          // uses getJSON to get the reponse in JSON 
-            this.getRemoteAdvice(data)          // calls the function to get the advice from the response
-        })
-        .fail(err => {                          // checks and alerts if theres an error
-            alert("404 error: Try sending another request");
-        });
-    },
-
-    getFetch: function (serverURL) {            // sends a GET request using Fetch API
-        fetch(serverURL)
-            .then(function(response) {
-                return response.json();         // return the response in JSON
-            })
-            .then(function(jsonResponse) {      // takes the JSON response and checks if the status is successful
-                if (jsonResponse.status == 'Success') {
-                    blackjack.getRemoteAdvice(jsonResponse);    // calls the function to get the advice
-                } else { 
-                    alert("404 error: Try sending another request");        // alerts the user if theres an error
-                }
-            })
-            
     },
 
     discardCard: function () {              // discards all the cards into the discarded array

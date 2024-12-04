@@ -30,7 +30,6 @@ app.use('/', routes);
 //Listen for connections on port 3000
 http.listen(port, function() {
     console.log('listening on http://127.0.0.1:3000');
-    blackjackAdvice.resetOutcomes();        // reset outcomes file on server start
 });
 
 let userCount = 0;
