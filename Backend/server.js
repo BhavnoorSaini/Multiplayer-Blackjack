@@ -12,7 +12,6 @@ var routes = require('./routes.js');
 const cors = require('cors');
 const app = express();
 const port = 3000;
-const blackjackAdvice = require('./blackjackadvice');
 
 var http = require('http').Server(app);
 const io = require("socket.io")(http, {cors: {origin: "*", methods: ["GET", "POST"]}});
@@ -33,10 +32,12 @@ http.listen(port, function() {
 });
 
 let userCount = 0;
+let usernames = '';
 
 // Handle socket connections
 io.on('connection', (socket) => {
     userCount++;
+
     io.emit('broadcast', { description: userCount });
     console.log(`A user connected. Total users: ${userCount}`);
 

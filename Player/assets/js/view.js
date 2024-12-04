@@ -99,3 +99,7 @@ function showNumberOfPlayers(numPlayers) {
     document.getElementById("totalUsers").innerText = numPlayers;
 }
 
+function showPlayer2Username(p2username) {
+    document.getElementById("p2Username").innerText = p2username;
+}
+
