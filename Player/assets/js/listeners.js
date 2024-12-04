@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {      // waits for DOM
 
         document.getElementById("deal").addEventListener("click", function() {
             blackjack.deal();           // starts a new game and deals the cards
+            emitDeal(gameplay.getUsername());
             
         });
 

@@ -32,7 +32,7 @@ http.listen(port, function() {
 });
 
 let userCount = 0;
-let usernames = '';
+let usernames = {};
 
 // Handle socket connections
 io.on('connection', (socket) => {
@@ -41,8 +41,16 @@ io.on('connection', (socket) => {
     io.emit('broadcast', { description: userCount });
     console.log(`A user connected. Total users: ${userCount}`);
 
+    socket.on('deal', (data) => {
+        usernames[socket.id] = data.username;
+
+        // Emit the username to all other clients except the sender
+        socket.broadcast.emit('deal', { username: data.username });
+    });
+
     socket.on('disconnect', () => {
         userCount--;
+        delete usernames[socket.id]; // Remove the user from the usernames object
         io.emit('broadcast', { description: userCount });
         console.log(`A user disconnected. Total users: ${userCount}`);
     });
