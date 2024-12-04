@@ -175,7 +175,7 @@ var blackjack = {
     carddeck: Object.create(card_deck),
     dealer: Object.create(hand),
     player: Object.create(user),
-    betIncrementValue: 10,
+    betIncrementValue: 100,
     dealersHitLimit: 16,
     betMultiplier: 2,
 
