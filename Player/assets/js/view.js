@@ -94,3 +94,8 @@ function resetView() {                      // resets the game board
     clearMessages();
     updateBet(0);
 }
+
+function showNumberOfPlayers(numPlayers) {
+    document.getElementById("numUsers").innerText = numPlayers;
+}
+

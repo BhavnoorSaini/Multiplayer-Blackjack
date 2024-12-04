@@ -11,9 +11,11 @@ var express = require('express');
 var routes = require('./routes.js');
 const cors = require('cors');
 const app = express();
-const hostname = '127.0.0.1';
 const port = 3000;
 const blackjackAdvice = require('./blackjackadvice');
+
+var http = require('http').Server(app);
+const io = require("socket.io")(http, {cors: {origin: "*", methods: ["GET", "POST"]}});
 
 //Get access to request body for POST requests
 app.use(express.urlencoded({ extended: true }));
@@ -26,9 +28,24 @@ app.use(cors());
 app.use('/', routes);
 
 //Listen for connections on port 3000
-app.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`)
+http.listen(port, function() {
+    console.log('listening on http://127.0.0.1:3000');
     blackjackAdvice.resetOutcomes();        // reset outcomes file on server start
+});
+
+let userCount = 0;
+
+// Handle socket connections
+io.on('connection', (socket) => {
+    userCount++;
+    io.emit('broadcast', { description: userCount });
+    console.log(`A user connected. Total users: ${userCount}`);
+
+    socket.on('disconnect', () => {
+        userCount--;
+        io.emit('broadcast', { description: userCount });
+        console.log(`A user disconnected. Total users: ${userCount}`);
+    });
 });
 
 
