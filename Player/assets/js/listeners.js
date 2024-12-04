@@ -11,7 +11,8 @@ document.addEventListener("DOMContentLoaded", function() {      // waits for DOM
             this.submit();                  // submits the form if valid
         });
         
-    } else {        
+    } else {   
+        blackjack.fetchDeck();     
         document.getElementById("hit").addEventListener("click", function() {
             blackjack.hit();            // calls the hit function to deal a card to the user
         });

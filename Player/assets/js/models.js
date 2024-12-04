@@ -7,6 +7,7 @@
 const suits = ["H","S","C","D"];	// array of given suits
 const maxCardsPerSuit = 13;		    // max number of cards in each suit
 
+/*
 var card = {            // card object defining getters and setters for suit, rank, and value
     suit: "",
     rank:0,
@@ -86,7 +87,7 @@ var card_deck = {       // defines the card deck
         return this.cardsleft;
     }
 };
-
+*/
 
 var hand = {        // object defining a hand
     cards: [],
@@ -172,7 +173,7 @@ var user = {                            // user object for the player
 
 //blackjack game model
 var blackjack = {
-    carddeck: Object.create(card_deck),
+    
     dealer: Object.create(hand),
     player: Object.create(user),
     betIncrementValue: 100,
@@ -306,6 +307,22 @@ var blackjack = {
     
     didPlayerGetTwentyOne: function () {    // checks to see if a player's score is 21
         return this.player.userhand.getScore() === 21;
+    },
+
+    fetchDeck: function () {
+        fetch('/carddeck') // Relative path assumes frontend and backend are served from the same origin
+        .then(response => {
+            if (!response.ok) {
+                console.error('Error fetching card deck:', response);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const carddeck= Object.create(data.card_deck);
+        })
+        .catch(error => {
+            console.error('Error fetching card deck:', error);
+        });
     }
 };
 

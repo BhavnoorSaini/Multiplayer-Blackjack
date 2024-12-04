@@ -5,7 +5,8 @@
 var express = require('express');       // utilize routes
 var router = express.Router();
 var mydb = require('./dbmgr.js');       // use database manager module
-const url = require('url');             //use the url module
+var carddeck = require('./carddeck')    // gets the carddeck object from server
+const url = require('url');             // use the url module
 
 //Setup database, only need to run this once. Unblock to run once then block this line again
 //mydb.setup();      
@@ -108,10 +109,11 @@ router.get('/printUsernames', function (req, res) {
     });
 });
 
-// Route to show if database is connected (default route)
-router.get('/' , function(req, res) {
-    res.send('Hello World!');
-});
   
+// route that gets the carddeck from the server
+router.get('/carddeck', function(req, res) {
+    console.log(carddeck.card_deck)
+    res.status(200).json({ card_deck: carddeck.card_deck });
+});
 
 module.exports = router;
