@@ -173,10 +173,7 @@ var user = {                            // user object for the player
 
 //blackjack game model
 var blackjack = {
-<<<<<<< HEAD
-=======
     
->>>>>>> 3f5fcf36ed5900efa77ae833477b46eb14bd66c6
     dealer: Object.create(hand),
     player: Object.create(user),
     betIncrementValue: 100,
