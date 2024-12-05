@@ -56,6 +56,16 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('setp2Bet', { bet: data.bet });
     });
 
+    socket.on('playerCards', (data) => {
+        // Emit the player's cards to all other clients except the sender
+        socket.broadcast.emit('setp2PlayerCards', { cards: data.cards });
+    });
+
+    socket.on('dealerCards', (data) => {
+        // Emit the dealer's cards to all other clients except the sender
+        socket.broadcast.emit('setp2DealerCards', { cards: data.cards });
+    });
+
     socket.on('disconnect', () => {
         userCount--;
         delete usernames[socket.id]; // Remove the user from the usernames object

@@ -215,6 +215,7 @@ var blackjack = {
     hit: function () {                      // hits and deals a card
         this.player.userhand.addCard(this.carddeck.dealCard());     
         showDealtCard("player", false);
+        
         if (!gamePlay.isGameOver()) {       // checks if game is over
             return;
         } else if (this.didPlayerBust()) {
@@ -237,6 +238,7 @@ var blackjack = {
         while (this.dealer.getScore() < this.dealersHitLimit) {         // as long as the dealers score isnt over given hit limit, the dealer will draw another card
             this.dealer.addCard(this.carddeck.dealCard());
             showDealtCard("dealer", false);
+            emitDealerCards(blackjack.dealer.cards); // Emit dealer's cards
         }
         if (this.dealer.getScore() > 21) {                      // checks win / loss states
             addMessage("Dealer Busts! Player Wins!");

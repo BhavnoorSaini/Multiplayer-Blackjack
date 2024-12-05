@@ -30,3 +30,23 @@ function emitBet(bet) {
 socket.on('setp2Bet', function (data) {
     updatePlayer2Bet(data.bet);
 });
+
+// Emit player's cards
+function emitPlayerCards(cards) {
+    socket.emit('playerCards', { cards: cards });
+}
+
+// Listen for the other player's cards
+socket.on('setp2PlayerCards', function (data) {
+    showPlayer2Cards(data.cards);
+});
+
+// Emit dealer's cards
+function emitDealerCards(cards) {
+    socket.emit('dealerCards', { cards: cards });
+}
+
+// Listen for the other player's dealer cards
+socket.on('setp2DealerCards', function (data) {
+    showDealer2Cards(data.cards);
+});

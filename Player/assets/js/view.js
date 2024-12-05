@@ -106,3 +106,27 @@ function showPlayer2Username(p2username) {
 function updatePlayer2Bet(bet) {
     document.getElementById("p2Bet").innerText = bet;
 }
+
+// Show the other player's cards
+function showPlayer2Cards(cards) {
+    var handDiv = document.getElementById("player2Hand");
+    handDiv.innerHTML = ""; // Clear existing cards
+    cards.forEach(card => {
+        var cardDiv = document.createElement("div");
+        cardDiv.className = "card_deck";
+        cardDiv.id = card.suit.charAt(0) + card.rank;
+        handDiv.appendChild(cardDiv);
+    });
+}
+
+// Show the other player's dealer cards
+function showDealer2Cards(cards) {
+    var handDiv = document.getElementById("dealer2Hand");
+    handDiv.innerHTML = ""; // Clear existing cards
+    cards.forEach(card => {
+        var cardDiv = document.createElement("div");
+        cardDiv.className = "card_deck";
+        cardDiv.id = card.suit.charAt(0) + card.rank;
+        handDiv.appendChild(cardDiv);
+    });
+}
