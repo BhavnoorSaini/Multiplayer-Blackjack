@@ -7,7 +7,7 @@
 const suits = ["H","S","C","D"];	// array of given suits
 const maxCardsPerSuit = 13;		    // max number of cards in each suit
 
-/*
+
 var card = {            // card object defining getters and setters for suit, rank, and value
     suit: "",
     rank:0,
@@ -87,7 +87,7 @@ var card_deck = {       // defines the card deck
         return this.cardsleft;
     }
 };
-*/
+
 
 var hand = {        // object defining a hand
     cards: [],
@@ -176,6 +176,7 @@ var blackjack = {
     
     dealer: Object.create(hand),
     player: Object.create(user),
+    carddeck: card_deck,
     betIncrementValue: 100,
     dealersHitLimit: 16,
     betMultiplier: 2,
@@ -309,23 +310,23 @@ var blackjack = {
         return this.player.userhand.getScore() === 21;
     },
 
-    fetchDeck: function () {
-        fetch('/carddeck') // Relative path assumes frontend and backend are served from the same origin
-        .then(response => {
-            if (!response.ok) {
-                console.error('Error fetching card deck:', response);
-            }
-            return response.json();
-        })
-        .then(data => {
-            this.carddeck = Object.create(data.card_deck);
-        this.carddeck = new CardDeck(data.card_deck);
-        this.carddeck.initialize();
-            const carddeck= Object.create(data.card_deck);
-        })
-        .catch(error => {
-            console.error('Error fetching card deck:', error);
-        });
-    }
+    // fetchDeck: function () {
+    //     fetch('/carddeck') // Relative path assumes frontend and backend are served from the same origin
+    //     .then(response => {
+    //         if (!response.ok) {
+    //             console.error('Error fetching card deck:', response);
+    //         }
+    //         return response.json();
+    //     })
+    //     .then(data => {
+    //         this.carddeck = Object.create(data.card_deck);
+    //     this.carddeck = new CardDeck(data.card_deck);
+    //     this.carddeck.initialize();
+    //         const carddeck= Object.create(data.card_deck);
+    //     })
+    //     .catch(error => {
+    //         console.error('Error fetching card deck:', error);
+    //     });
+    // }
 };
 

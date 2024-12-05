@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {      // waits for DOM
         });
         
     } else {   
-        blackjack.fetchDeck();     
+        // blackjack.fetchDeck();     
         document.getElementById("hit").addEventListener("click", function() {
             blackjack.hit();            // calls the hit function to deal a card to the user
         });
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {      // waits for DOM
 
         document.getElementById("deal").addEventListener("click", function() {
             blackjack.deal();           // starts a new game and deals the cards
-            emitDeal(gameplay.getUsername());
+            emitDeal(gamePlay.getUsername());
             
         });
 
