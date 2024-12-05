@@ -33,6 +33,7 @@ http.listen(port, function() {
 
 let userCount = 0;
 let usernames = {};
+let bet = {};
 
 // Handle socket connections
 io.on('connection', (socket) => {
@@ -41,11 +42,11 @@ io.on('connection', (socket) => {
     io.emit('broadcast', { description: userCount });
     console.log(`A user connected. Total users: ${userCount}`);
 
-    socket.on('deal', (data) => {
+    socket.on('username', (data) => {
         usernames[socket.id] = data.username;
 
         // Emit the username to all other clients except the sender
-        socket.broadcast.emit('deal', { username: data.username });
+        socket.broadcast.emit('setp2Username', { username: data.username });
     });
 
     socket.on('disconnect', () => {
