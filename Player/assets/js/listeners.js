@@ -25,6 +25,9 @@ document.addEventListener("DOMContentLoaded", function() {      // waits for DOM
             blackjack.deal();           // starts a new game and deals the cards
             emitUsername(gamePlay.getUsername());
             
+            // print the user bet
+            emitBet(blackjack.player.userBet);
+            
         });
 
         document.getElementById("reset").addEventListener("click", function() {

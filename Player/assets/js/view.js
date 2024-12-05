@@ -103,3 +103,6 @@ function showPlayer2Username(p2username) {
     document.getElementById("p2Username").innerText = p2username;
 }
 
+function updatePlayer2Bet(bet) {
+    document.getElementById("p2Bet").innerText = bet;
+}

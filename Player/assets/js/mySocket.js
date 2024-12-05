@@ -22,3 +22,11 @@ function emitUsername(username) {
 socket.on('setp2Username', function (data) {
     showPlayer2Username(data.username);
 }); 
+
+function emitBet(bet) {
+    socket.emit('bet', { bet: bet });
+}
+
+socket.on('setp2Bet', function (data) {
+    updatePlayer2Bet(data.bet);
+});
