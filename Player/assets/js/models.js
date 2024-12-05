@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------
-//Santiago Ramirez
+//Santiago Ramirez & Bhavnoor Saini
 //modules.js
 //main game logic. handles gameplay, deck of cards, and player and dealer hands
 //-------------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 //-------------------------------------
-//Santiago Ramirez
+//Santiago Ramirez & Bhavnoor Saini
 //view.js
 //handles visual elements of the game
 //-------------------------------------

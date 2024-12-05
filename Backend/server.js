@@ -1,12 +1,10 @@
 //-------------------------------------------------------------------------------
-//Santiago Ramirez
+//Santiago Ramirez & Bhavnoor Saini
 //server.js
 //runs a local server using node.js 
 //-------------------------------------------------------------------------------
 
 
-// const http = require('http');
-// const fs = require('fs');           // Require the file system module
 var express = require('express');
 var routes = require('./routes.js');
 const cors = require('cors');

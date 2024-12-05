@@ -113,11 +113,4 @@ router.get('/', function (req, res) {
     res.status(200).json({ message: 'Welcome to the Blackjack Multiplayer Server!' });   // welcome message
 });
 
-  
-// route that gets the carddeck from the server
-// router.get('/carddeck', function(req, res) {
-//     console.log(carddeck.card_deck)
-//     res.status(200).json({ card_deck: carddeck.card_deck });
-// });
-
 module.exports = router;

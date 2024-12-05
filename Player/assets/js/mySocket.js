@@ -1,3 +1,4 @@
+// Santiago Ramirez & Bhavnor Saini
 // Blackjack Web Sockets
 
 var myURL = "http://127.0.0.1:3000";

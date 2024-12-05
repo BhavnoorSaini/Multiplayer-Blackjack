@@ -1,5 +1,5 @@
 //------------------------------------------
-//Santiago Ramirez
+//Santiago Ramirez & Bhavnoor Saini
 //listeners.js
 //provides the listners and event handling
 //------------------------------------------
@@ -11,8 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {      // waits for DOM
             this.submit();                  // submits the form if valid
         });
         
-    } else {   
-        // blackjack.fetchDeck();     
+    } else {     
         document.getElementById("hit").addEventListener("click", function() {
             blackjack.hit();            // calls the hit function to deal a card to the user
         });

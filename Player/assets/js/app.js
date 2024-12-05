@@ -1,5 +1,5 @@
 //-------------------------------------------
-//Santiago Ramirez
+//Santiago Ramirez & Bhavnoor Saini
 //app.js
 //handles game initialization and game state
 //-------------------------------------------
@@ -39,7 +39,6 @@ var gamePlay = {
         blackjack.player.resetUserBet();
         updateWallet();
         updateCardsLeft();
-        // updateDealerValue();
         addMessage("Game Reset!");              // displays message when successfully reset
     },
 
