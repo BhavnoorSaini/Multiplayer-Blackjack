@@ -214,11 +214,13 @@ var blackjack = {
     
     hit: function () {                      // hits and deals a card
         this.player.userhand.addCard(this.carddeck.dealCard());     
+        emitPlayerCards(this.player.userhand.cards); // Emit player's cards
         showDealtCard("player", false);
         
         if (!gamePlay.isGameOver()) {       // checks if game is over
             return;
         } else if (this.didPlayerBust()) {
+            emitDealerCards(blackjack.dealer.cards); // Emit dealer's cards if player busts
             addMessage("Player Busts!");
             this.payBet(false, false);      // lost the bet
         } else if (this.didPlayerGetTwentyOne()) {

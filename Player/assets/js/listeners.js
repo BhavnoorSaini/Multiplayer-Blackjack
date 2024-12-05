@@ -15,10 +15,10 @@ document.addEventListener("DOMContentLoaded", function() {      // waits for DOM
         // blackjack.fetchDeck();     
         document.getElementById("hit").addEventListener("click", function() {
             blackjack.hit();            // calls the hit function to deal a card to the user
-            emitPlayerCards(blackjack.player.userhand.cards); // Emit player's cards
-            if (blackjack.didPlayerBust()) {
-                emitDealerCards(blackjack.dealer.cards); // Emit dealer's cards if player busts
-            }
+            // emitPlayerCards(blackjack.player.userhand.cards); // Emit player's cards
+            // if (blackjack.didPlayerBust()) {
+            //     emitDealerCards(blackjack.dealer.cards); // Emit dealer's cards if player busts
+            // }
         });
 
         document.getElementById("stand").addEventListener("click", function() {
