@@ -5,7 +5,6 @@
 var express = require('express');       // utilize routes
 var router = express.Router();
 var mydb = require('./dbmgr.js');       // use database manager module
-var carddeck = require('./carddeck')    // gets the carddeck object from server
 const url = require('url');             // use the url module
 
 //Setup database, only need to run this once. Unblock to run once then block this line again
